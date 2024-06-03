@@ -12,12 +12,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: Text("hello")
+        home: Scaffold(
+          appBar: 
+            AppBar(
+              title: Text("Dr Reach"),
+              ),
+
+            body: Center(child: Text("Hello world"),),
+            ),
+            
     );
   }
 }
