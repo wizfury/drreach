@@ -8,7 +8,7 @@ class ScheduleGroup extends StatelessWidget {
     return   Row(
       children: [
         const Text(
-          "Upcoming Schedule",
+          " Upcoming Schedule",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
