@@ -1,11 +1,20 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+import './onboarding/onboarding_view.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'home.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final onboarding=prefs.getBool("onboarding")??false;
+  runApp(MyApp(onboarding: onboarding));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool onboarding;
+  const MyApp({super.key, this.onboarding=false});
 
   // This widget is the root of your application.
   @override
@@ -15,18 +24,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-        home: Scaffold(
-          appBar: 
-            AppBar(
-              title: Text("Dr Reach"),
-              ),
-
-            body: Center(child: Text("Hello world"),),
-            ),
-            
+        home: onboarding? Home(): OnboardingView(),
     );
   }
 }
