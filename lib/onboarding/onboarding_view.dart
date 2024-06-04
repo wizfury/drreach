@@ -1,4 +1,4 @@
-import 'package:drreach/Components/color.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -26,9 +26,13 @@ class _OnboardingViewState extends State<OnboardingView> {
         color: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
         child: isLastPage ? Row(
+
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            getStarted(),
+            Container(
+                height: MediaQuery.of(context).size.height*.2,
+                width: MediaQuery.of(context).size.width*.2,
+                child: getStarted()),
           ],
         ): Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,6 +44,7 @@ class _OnboardingViewState extends State<OnboardingView> {
 
             //Indicator
             SmoothPageIndicator(
+
                 controller: pageController,
                 count: controller.items.length,
                 onDotClicked: (index)=>pageController.animateToPage(index,
@@ -57,7 +62,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             //Next
             TextButton(
                 onPressed: ()=>pageController.nextPage(
-                    duration: Duration(milliseconds: 600), curve: Curves.easeIn),
+                    duration: const Duration(milliseconds: 600), curve: Curves.easeIn),
 
                 child: Text("Next"))
           ],
@@ -68,6 +73,7 @@ class _OnboardingViewState extends State<OnboardingView> {
       body: Stack(
         children: [
           Container(
+
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: PageView.builder(
               onPageChanged: (index)=> setState(()=>
@@ -80,12 +86,12 @@ class _OnboardingViewState extends State<OnboardingView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Image.asset(controller.items[index].image)),
                       const SizedBox(height: 35,),
                       Image.asset(controller.items[index].titleimg,),
                       const SizedBox(height: 15),
-                      Text(controller.items[index].description,style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold,fontSize: 18) ,textAlign: TextAlign.center,)
+                      Text(controller.items[index].description,style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold,fontSize: 18) ,textAlign: TextAlign.center,)
 
                     ],
                   );
@@ -97,23 +103,17 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   Widget getStarted(){
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.blueGrey
-      ),
-      width: MediaQuery.of(context).size.width*0.2,
-      height: 55,
-      child: TextButton(
-          onPressed: () async {
-            final pres =  await SharedPreferences.getInstance();
-            pres.setBool("onboarding",true);
+    return IconButton(
 
-            //After pressing > button this onboarding value becomes true
-            if(!mounted)return;
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
-          },
-          child: Text(">", style: TextStyle(color: Colors.white))),
-    );
+        onPressed: () async {
+          final pres =  await SharedPreferences.getInstance();
+          pres.setBool("onboarding",true);
+
+          //After pressing > button this onboarding value becomes true
+          if(!mounted)return;
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+        },
+        icon: Image.asset("assets/onboarding_button.png"),
+        );
   }
 }
